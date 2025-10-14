@@ -10,6 +10,10 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [pageSize, setPageSize] = useState<number>(10);
+  const [search, setSearch] = useState<string>("");
+
+  const filteredCoins =
+    search === "" ? coins : coins.filter((coin) => coin.name.toLowerCase().includes(search.toLowerCase()));
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -54,12 +58,14 @@ const App = () => {
 
       <PageSize pageSize={pageSize} setPageSize={setPageSize}></PageSize>
 
+      <input type="text" onChange={(e) => setSearch(e.currentTarget.value)} value={search}/>
+
       {isLoading && <h1>Loading...</h1>}
       {error && <div className="error">{error}</div>}
 
       {!isLoading && !error && (
         <main className="grid">
-          {coins.map((coin) => (
+          {filteredCoins.map((coin) => (
             <CoinCard key={coin.id} coin={coin}></CoinCard>
           ))}
         </main>
