@@ -73,8 +73,9 @@ const App = () => {
     <>
       <h1>React Crypto</h1>
 
-      <div className="">
-        <select value={orderBy} onChange={(e) => setOrderBy(e.target.value)}>
+      <div className="controls">
+        <label htmlFor="ddlOrderBy">Order By:</label>
+        <select id="ddlOrderBy" value={orderBy} onChange={(e) => setOrderBy(e.target.value)}>
           <option value="priceAsc">Price: Low to High</option>
           <option value="priceDesc">Price: High to Low</option>
           <option value="marketAsc">Market: Low to High</option>
