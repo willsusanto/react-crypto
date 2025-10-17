@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type Coin from "./types/Coin";
 import CoinCard from "./components/CoinCard";
 import PageSize from "./components/PageSize";
+import SearchInput from "./components/SearchInput";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -58,16 +59,16 @@ const App = () => {
 
       <PageSize pageSize={pageSize} setPageSize={setPageSize}></PageSize>
 
-      <input type="text" onChange={(e) => setSearch(e.currentTarget.value)} value={search}/>
+      <SearchInput search={search} setSearch={setSearch}></SearchInput>
 
       {isLoading && <h1>Loading...</h1>}
       {error && <div className="error">{error}</div>}
 
       {!isLoading && !error && (
         <main className="grid">
-          {filteredCoins.map((coin) => (
+          {filteredCoins.length > 0 ? filteredCoins.map((coin) => (
             <CoinCard key={coin.id} coin={coin}></CoinCard>
-          ))}
+          )) : <p>No matching coins!</p>}
         </main>
       )}
     </>
