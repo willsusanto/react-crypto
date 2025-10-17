@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import type Coin from "./types/Coin";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/home";
 import { Route, Routes } from "react-router";
+import AboutPage from "./pages/about";
+import Header from "./components/Header";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -77,24 +79,28 @@ const App = () => {
   }, [pageSize]);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <HomePage
-            orderBy={orderBy}
-            setOrderBy={setOrderBy}
-            pageSize={pageSize}
-            setPageSize={setPageSize}
-            search={search}
-            setSearch={setSearch}
-            error={error}
-            orderedByCoins={orderedByCoins}
-            isLoading={isLoading}
-          ></HomePage>
-        }
-      ></Route>
-    </Routes>
+    <>
+      <Header></Header>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              orderBy={orderBy}
+              setOrderBy={setOrderBy}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              search={search}
+              setSearch={setSearch}
+              error={error}
+              orderedByCoins={orderedByCoins}
+              isLoading={isLoading}
+            ></HomePage>
+          }
+        ></Route>
+        <Route path="/about" element={<AboutPage />}></Route>
+      </Routes>
+    </>
   );
 };
 
