@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import type Coin from "./types/Coin";
-import CoinCard from "./components/CoinCard";
-import PageSize from "./components/PageSize";
-import SearchInput from "./components/SearchInput";
-import OrderBy from "./components/OrderBy";
+import HomePage from "./pages/HomePage";
+import { Route, Routes } from "react-router";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -79,30 +77,24 @@ const App = () => {
   }, [pageSize]);
 
   return (
-    <>
-      <h1>React Crypto</h1>
-
-      <OrderBy orderBy={orderBy} setOrderBy={setOrderBy}></OrderBy>
-
-      <PageSize pageSize={pageSize} setPageSize={setPageSize}></PageSize>
-
-      <SearchInput search={search} setSearch={setSearch}></SearchInput>
-
-      {isLoading && <h1>Loading...</h1>}
-      {error && <div className="error">{error}</div>}
-
-      {!isLoading && !error && (
-        <main className="grid">
-          {orderedByCoins.length > 0 ? (
-            orderedByCoins.map((coin) => (
-              <CoinCard key={coin.id} coin={coin}></CoinCard>
-            ))
-          ) : (
-            <p>No matching coins!</p>
-          )}
-        </main>
-      )}
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <HomePage
+            orderBy={orderBy}
+            setOrderBy={setOrderBy}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            search={search}
+            setSearch={setSearch}
+            error={error}
+            orderedByCoins={orderedByCoins}
+            isLoading={isLoading}
+          ></HomePage>
+        }
+      ></Route>
+    </Routes>
   );
 };
 
